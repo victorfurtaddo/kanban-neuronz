@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban Neuronz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <h1>Kanban Neuronz</h1>
+          <p>Organize suas tarefas com total visibilidade.</p>
+        </div>
+        <button id="logoutButton" class="ghost-button" hidden>Sair</button>
+      </header>
+
+      <main>
+        <section id="loginSection" class="card login-card">
+          <h2>Login</h2>
+          <p class="muted">Entre com as credenciais fornecidas pelo administrador.</p>
+          <form id="loginForm" class="login-form">
+            <label>
+              Usuário
+              <input type="text" name="username" required />
+            </label>
+            <label>
+              Senha
+              <input type="password" name="password" required />
+            </label>
+            <button type="submit" class="primary-button">Entrar</button>
+            <p id="loginError" class="error" role="alert"></p>
+          </form>
+        </section>
+
+        <section id="boardSection" hidden>
+          <div class="board-header">
+            <div>
+              <h2>Quadro</h2>
+              <p class="muted">Atualize as etapas com um clique e mantenha o time alinhado.</p>
+            </div>
+            <div class="board-actions">
+              <button id="refreshButton" class="ghost-button">Atualizar</button>
+              <button id="newTaskButton" class="primary-button">Nova tarefa</button>
+            </div>
+          </div>
+
+          <div class="board-toolbar card">
+            <div class="toolbar-group">
+              <label>
+                Buscar
+                <input type="search" id="searchInput" placeholder="Título ou descrição" />
+              </label>
+            </div>
+            <div class="toolbar-group">
+              <label>
+                Prioridade
+                <select id="priorityFilter">
+                  <option value="all">Todas</option>
+                  <option value="alta">Alta</option>
+                  <option value="media">Média</option>
+                  <option value="baixa">Baixa</option>
+                </select>
+              </label>
+              <label>
+                Tag
+                <input type="text" id="tagFilter" placeholder="Ex: marketing" />
+              </label>
+              <label>
+                Prazo
+                <select id="dueFilter">
+                  <option value="all">Qualquer</option>
+                  <option value="overdue">Atrasadas</option>
+                  <option value="today">Hoje</option>
+                  <option value="week">Próximos 7 dias</option>
+                  <option value="none">Sem prazo</option>
+                </select>
+              </label>
+            </div>
+            <div class="toolbar-group stats">
+              <div>
+                <span class="stat-label">Total</span>
+                <span id="statTotal" class="stat-value">0</span>
+              </div>
+              <div>
+                <span class="stat-label">Em andamento</span>
+                <span id="statDoing" class="stat-value">0</span>
+              </div>
+              <div>
+                <span class="stat-label">Concluídas</span>
+                <span id="statDone" class="stat-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="board">
+            <div class="column" data-column="todo">
+              <div class="column-header">
+                <h3>A fazer</h3>
+                <button class="ghost-button" data-action="add">+ Nova tarefa</button>
+              </div>
+              <div class="column-body" id="todoColumn"></div>
+            </div>
+            <div class="column" data-column="doing">
+              <div class="column-header">
+                <h3>Em andamento</h3>
+              </div>
+              <div class="column-body" id="doingColumn"></div>
+            </div>
+            <div class="column" data-column="done">
+              <div class="column-header">
+                <h3>Concluído</h3>
+              </div>
+              <div class="column-body" id="doneColumn"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="modal" class="modal" hidden>
+      <div class="modal-card">
+        <h3>Nova tarefa</h3>
+        <form id="taskForm">
+          <label>
+            Título
+            <input type="text" name="title" required />
+          </label>
+          <label>
+            Descrição
+            <textarea name="description" rows="4"></textarea>
+          </label>
+          <label>
+            Prioridade
+            <select name="priority" required>
+              <option value="alta">Alta</option>
+              <option value="media" selected>Média</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </label>
+          <label>
+            Prazo
+            <input type="date" name="dueDate" />
+          </label>
+          <label>
+            Tags (separe por vírgula)
+            <input type="text" name="tags" placeholder="marketing, vendas" />
+          </label>
+          <div class="modal-actions">
+            <button type="button" id="cancelTask" class="ghost-button">Cancelar</button>
+            <button type="submit" class="primary-button">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
